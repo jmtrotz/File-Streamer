@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">File Streamer</string>
+    <string name="hint_select_file">Select File</string>
+    <string name="hint_enter_url">Enter Destination URL</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_stream">Stream File</string>
+    <string name="btn_stop">Stop</string>
+    <string name="dialog_title_steaming_file">Streaming File…</string>
+    <string name="permission_rationale">One or more permission(s) that is required to access files
+        on this device is not granted. Press \'OK\' to open settings for this application to
+        grant the required permission(s), or press \'Cancel\' to close this message.</string>
+    <string name="permission_required">Permission(s) Required</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">OK</string>
+    <string name="sb_msg_invalid_path">"Please select a file"</string>
+    <string name="copy_file">Copying file…</string>
+    <string name="prepare_file">Preparing file…</string>
+</resources>
