@@ -366,7 +366,7 @@ private fun TextFields(
                     permissionsStateApi33 = permissionsStateApi33,
                     onAllPermissionsGranted = {
                         Log.d(TAG, "Launching file chooser")
-                        activityResultLauncher.launch("media/*")
+                        activityResultLauncher.launch("*/*")
                     }
                 ) { isApi33 ->
                     if (isApi33) {
