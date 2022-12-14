@@ -52,7 +52,6 @@ object FileStreamer: ConnectCheckerRtsp, AudioDecoderInterface, VideoDecoderInte
 
     override fun onNewBitrateRtsp(bitrate: Long) {
         Log.d(TAG, "New bitrate")
-        message = "New Bitrate"
     }
 
     override fun onDisconnectRtsp() {

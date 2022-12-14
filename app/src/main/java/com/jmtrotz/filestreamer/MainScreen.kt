@@ -1,12 +1,10 @@
 package com.jmtrotz.filestreamer
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.OpenableColumns
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -95,7 +93,6 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel()) {
             val outputStream = FileOutputStream(file)
 
             Log.d(TAG, "Copying file")
-            //IOUtils.copy(inputStream, outputStream)
             Util.copyFile(
                 inputStream = inputStream,
                 outputStream = outputStream,
@@ -238,19 +235,12 @@ private fun ToastAndDialogs(context: Context, viewModel: MainViewModel) {
             onDismissRequest = { Log.d(TAG, "Dismissing progress dialog") },
             title = {
                 if (FileStreamer.isPreparingFile) {
-                    Text(text = stringResource(id = R.string.copy_file))
-                } else {
                     Text(text = stringResource(id = R.string.prepare_file))
+                } else {
+                    Text(text = stringResource(id = R.string.copy_file))
                 }
             },
-            text = {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicator()
-                }
-            },
+            text = { CircularProgressIndicator() },
             confirmButton = {  },
             dismissButton = {  },
             properties = DialogProperties(
@@ -260,20 +250,14 @@ private fun ToastAndDialogs(context: Context, viewModel: MainViewModel) {
         )
     }
 
+    // TODO: Fix progress indicator not centered
     // Progress dialog that is shown when a file is streaming
     if (FileStreamer.isStreaming) {
         Log.d(TAG, "Showing stream progress dialog")
         AlertDialog(
             onDismissRequest = { Log.d(TAG, "Dismissing stream progress dialog") },
             title = { Text(text = stringResource(id = R.string.dialog_title_steaming_file)) },
-            text = {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicator()
-                }
-           },
+            text = { CircularProgressIndicator() },
             confirmButton = {  },
             dismissButton = {
                 Button(onClick = {
@@ -291,6 +275,7 @@ private fun ToastAndDialogs(context: Context, viewModel: MainViewModel) {
         )
     }
 
+    // TODO: Fix progress indicator not centered
     // Rationale dialog that is shown if a permission is not granted
     if (viewModel.isRationaleVisible) {
         Log.d(TAG, "Showing permission rationale")

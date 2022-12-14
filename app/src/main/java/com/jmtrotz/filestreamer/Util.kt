@@ -8,6 +8,10 @@ import android.util.Log
 
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -102,20 +106,24 @@ object Util {
         onCopyStarted: () -> Unit,
         onCopyComplete: () -> Unit
     ) {
-        val buffer = ByteArray(1024)
-        var length = inputStream.read(buffer)
-        onCopyStarted.invoke()
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                Log.d(TAG, "File copy started")
+                onCopyStarted.invoke()
+                val buffer = ByteArray(1024)
+                var length = inputStream.read(buffer)
 
-        Log.d(TAG, "File copy started")
-        while (length > 0) {
-            outputStream.write(buffer, 0, length)
-            length = inputStream.read(buffer)
+                while (length > 0) {
+                    outputStream.write(buffer, 0, length)
+                    length = inputStream.read(buffer)
+                }
+
+                Log.d(TAG, "File copy complete")
+                inputStream.close()
+                outputStream.close()
+                onCopyComplete.invoke()
+            }
         }
-
-        Log.d(TAG, "File copy complete")
-        inputStream.close()
-        outputStream.close()
-        onCopyComplete.invoke()
     }
 }
 
